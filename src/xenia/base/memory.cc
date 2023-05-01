@@ -173,6 +173,10 @@ static void vastcpy_impl_movdir64m(CacheLine* XE_RESTRICT physaddr,
     _movdir64b(physaddr + i, rdmapping + i);
   }
 }
+static void __movsq(void* dst, const void* src, size_t size)
+{
+  __asm__ __volatile__("rep movsq" : "+D"(dst), "+S"(src), "+c"(size) : : "memory");
+}
 static void vastcpy_impl_repmovs(CacheLine* XE_RESTRICT physaddr,
                                  CacheLine* XE_RESTRICT rdmapping,
                                  uint32_t written_length) {

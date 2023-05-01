@@ -53,4 +53,8 @@ uint64_t Clock::QueryHostUptimeMillis() {
   return host_tick_count_platform() * 1000 / host_tick_frequency_platform();
 }
 
+uint64_t Clock::QueryHostInterruptTime() {
+  return uint64_t{0};
+}
+
 }  // namespace xe

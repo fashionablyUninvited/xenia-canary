@@ -910,6 +910,12 @@ void Value::Insert(Value* index, Value* part, TypeName type) {
     case INT32_TYPE:
       me->u32[index->constant.u8] = part->constant.u32;
       break;
+    case INT64_TYPE:
+    case FLOAT32_TYPE:
+    case FLOAT64_TYPE:
+    case VEC128_TYPE:
+    case MAX_TYPENAME:
+      break;
   }
 }
 void Value::Swizzle(uint32_t mask, TypeName type) {
@@ -946,6 +952,9 @@ void Value::Select(Value* other, Value* ctrl) {
         case INT64_TYPE:
         case FLOAT64_TYPE:
           constant.u64 = other->constant.u64;
+          break;
+        case VEC128_TYPE:
+        case MAX_TYPENAME:
           break;
       }
     }

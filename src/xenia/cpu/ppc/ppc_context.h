@@ -16,6 +16,8 @@
 
 #include "xenia/base/mutex.h"
 #include "xenia/base/vec128.h"
+#include "xenia/memory.h"
+
 namespace xe {
 namespace cpu {
 class Processor;
@@ -419,6 +421,8 @@ typedef struct alignas(64) PPCContext_s {
   // current runtime and its data.
   Processor* processor;
 
+  Memory *memory;
+
   // Shared kernel state, for easy access from kernel exports.
   xe::kernel::KernelState* kernel_state;
 
@@ -438,15 +442,15 @@ typedef struct alignas(64) PPCContext_s {
     }
     return reinterpret_cast<T>(host_address);
 #else
-    return processor->memory()->TranslateVirtual<T>(guest_address);
-
+    //return processor->memory()->TranslateVirtual<T>(guest_address);
+    return memory->TranslateVirtual<T>(guest_address);
 #endif
   }
   //for convenience in kernel functions, version that auto narrows to uint32
   template <typename T = uint8_t*>
   inline T TranslateVirtualGPR(uint64_t guest_address) XE_RESTRICT const {
     return TranslateVirtual<T>(static_cast<uint32_t>(guest_address));
-  
+
   }
 
   static std::string GetRegisterName(PPCRegister reg);

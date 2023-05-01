@@ -80,7 +80,7 @@ constexpr uint32_t EncodeIsPrimitivePolygonalTable() {
 // GL_FRONT_AND_BACK, points and lines are still drawn), and may in some cases
 // use the "para" registers instead of "front" or "back" (for "parallelogram" -
 // like poly_offset_para_enable).
-XE_FORCEINLINE
+//XE_FORCEINLINE
 constexpr bool IsPrimitivePolygonal(bool vgt_output_path_is_tessellation_enable,
                                     xenos::PrimitiveType type) {
   if (vgt_output_path_is_tessellation_enable &&
@@ -98,8 +98,8 @@ constexpr bool IsPrimitivePolygonal(bool vgt_output_path_is_tessellation_enable,
 
   return (primitive_polygonal_table & (1U << static_cast<uint32_t>(type))) != 0;
 }
-XE_FORCEINLINE
-bool IsPrimitivePolygonal(const RegisterFile& regs) {
+//XE_FORCEINLINE
+inline bool IsPrimitivePolygonal(const RegisterFile& regs) {
   return IsPrimitivePolygonal(
       regs.Get<reg::VGT_OUTPUT_PATH_CNTL>().path_select ==
           xenos::VGTOutputPath::kTessellationEnable,

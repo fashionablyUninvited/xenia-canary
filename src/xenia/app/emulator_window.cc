@@ -31,7 +31,9 @@
 #include "xenia/cpu/processor.h"
 #include "xenia/emulator.h"
 #include "xenia/gpu/command_processor.h"
+#ifdef _WIN32
 #include "xenia/gpu/d3d12/d3d12_command_processor.h"
+#endif
 #include "xenia/gpu/graphics_system.h"
 #include "xenia/hid/input_system.h"
 #include "xenia/ui/file_picker.h"
@@ -1254,12 +1256,12 @@ EmulatorWindow::ControllerHotKey EmulatorWindow::ProcessControllerHotkey(
     } break;
     case ButtonFunctions::ClearMemoryPageState:
       ToggleGPUSetting(gpu_cvar::ClearMemoryPageState);
-
+#ifdef _WIN32
       // Assume the user wants ClearCaches as well
       if (cvars::d3d12_clear_memory_page_state) {
         GpuClearCaches();
       }
-
+#endif
       // Extra Sleep
       xe::threading::Sleep(delay);
       break;
@@ -1385,6 +1387,7 @@ void EmulatorWindow::GamepadHotKeys() {
 }
 
 void EmulatorWindow::ToggleGPUSetting(gpu_cvar value) {
+#ifdef _WIN32
   switch (value) {
     case gpu_cvar::ClearMemoryPageState:
       D3D12SaveGPUSetting(D3D12GPUSetting::ClearMemoryPageState,
@@ -1395,6 +1398,7 @@ void EmulatorWindow::ToggleGPUSetting(gpu_cvar value) {
                           !cvars::d3d12_readback_resolve);
       break;
   }
+#endif
 }
 
 // Determine if the Xbox Gamebar is enabled via the Windows registry
@@ -1431,7 +1435,7 @@ void EmulatorWindow::DisplayHotKeysConfig() {
     if (!guide_enabled) {
       pretty_text = std::regex_replace(
           pretty_text,
-          std::regex("Guide", std::regex_constants::syntax_option_type::icase),
+          std::regex("Guide", std::regex_constants::icase),
           "Back");
     }
 
@@ -1457,14 +1461,14 @@ void EmulatorWindow::DisplayHotKeysConfig() {
   msg_passthru += "\n";
   msg.insert(0, msg_passthru);
   msg += "\n";
-
+#ifdef _WIN32
   msg += "Readback Resolve: " + BoolToString(cvars::d3d12_readback_resolve);
   msg += "\n";
 
   msg += "Clear Memory Page State: " +
          BoolToString(cvars::d3d12_clear_memory_page_state);
   msg += "\n";
-
+#endif
   msg += "Controller Hotkeys: " + BoolToString(cvars::controller_hotkeys);
 
   imgui_drawer_.get()->ClearDialogs();
@@ -1476,7 +1480,7 @@ xe::X_STATUS EmulatorWindow::RunTitle(std::filesystem::path path_to_file) {
   bool titleExists = !std::filesystem::exists(path_to_file);
 
   if (path_to_file.empty() || titleExists) {
-    char* log_msg = path_to_file.empty()
+    const char* log_msg = path_to_file.empty()
                         ? "Failed to launch title path is empty."
                         : "Failed to launch title path is invalid.";
 

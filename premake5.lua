@@ -35,6 +35,7 @@ symbols("On")
 if ARCH ~= "ppc64" then
   filter("architecture:x86_64")
     vectorextensions("AVX")
+    vectorextensions("AVX2")
   filter({})
 end
 
@@ -102,6 +103,7 @@ filter("platforms:Linux")
   system("linux")
   toolset("clang")
   buildoptions({
+    "-mmovbe"
     -- "-mlzcnt",  -- (don't) Assume lzcnt is supported.
   })
   pkg_config.all("gtk+-x11-3.0")

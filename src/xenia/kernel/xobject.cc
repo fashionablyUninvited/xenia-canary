@@ -158,6 +158,8 @@ object_ref<XObject> XObject::Restore(KernelState* kernel_state, Type type,
       break;
     case Type::Undefined:
       break;
+    case Type::Device:
+      break;
   }
 
   assert_always("No restore handler exists for this object!");
@@ -446,13 +448,13 @@ object_ref<XObject> XObject::GetNativeObject(KernelState* kernel_state,
     // FIXME: This assumes the object contains a dispatch header (some don't!)
     StashHandle(header, object->handle());
     result = object;
-
+  }
   return_result:
     if (!already_locked) {
       global_critical_region::mutex().unlock();
     }
     return object_ref<XObject>(result);
-  }
+
 }
 
 }  // namespace kernel

@@ -391,6 +391,112 @@ redo:
       }
       break;
     }
+    case OPCODE_COMMENT:
+    case OPCODE_NOP:
+    case OPCODE_SOURCE_OFFSET:
+    case OPCODE_DEBUG_BREAK:
+    case OPCODE_DEBUG_BREAK_TRUE:
+    case OPCODE_TRAP:
+    case OPCODE_TRAP_TRUE:
+    case OPCODE_CALL:
+    case OPCODE_CALL_TRUE:
+    case OPCODE_CALL_INDIRECT:
+    case OPCODE_CALL_INDIRECT_TRUE:
+    case OPCODE_CALL_EXTERN:
+    case OPCODE_RETURN:
+    case OPCODE_RETURN_TRUE:
+    case OPCODE_SET_RETURN_ADDRESS:
+    case OPCODE_BRANCH:
+    case OPCODE_BRANCH_TRUE:
+    case OPCODE_BRANCH_FALSE:
+    case OPCODE_CAST:
+    case OPCODE_CONVERT:
+    case OPCODE_ROUND:
+    case OPCODE_VECTOR_CONVERT_I2F:
+    case OPCODE_VECTOR_CONVERT_F2I:
+    case OPCODE_LOAD_VECTOR_SHL:
+    case OPCODE_LOAD_VECTOR_SHR:
+    case OPCODE_LOAD_CLOCK:
+    case OPCODE_LOAD_LOCAL:
+    case OPCODE_STORE_LOCAL:
+    case OPCODE_LOAD_CONTEXT:
+    case OPCODE_STORE_CONTEXT:
+    case OPCODE_CONTEXT_BARRIER:
+    case OPCODE_LOAD_MMIO:
+    case OPCODE_STORE_MMIO:
+    case OPCODE_LOAD_OFFSET:   // remove: use add instead?
+    case OPCODE_STORE_OFFSET:  // remove: use add instead?
+    case OPCODE_LOAD:
+    case OPCODE_STORE:
+    case OPCODE_LVL:
+    case OPCODE_LVR:
+    case OPCODE_STVL:
+    case OPCODE_STVR:
+    case OPCODE_MEMSET:
+    case OPCODE_CACHE_CONTROL:
+    case OPCODE_MEMORY_BARRIER:
+    case OPCODE_VECTOR_MAX:
+    case OPCODE_VECTOR_MIN:
+    case OPCODE_IS_NAN:  // remove? compare_eq with self instead
+    case OPCODE_COMPARE_EQ:
+    case OPCODE_COMPARE_NE:
+    case OPCODE_COMPARE_SLT:
+    case OPCODE_COMPARE_SLE:
+    case OPCODE_COMPARE_SGT:
+    case OPCODE_COMPARE_SGE:
+    case OPCODE_COMPARE_ULT:
+    case OPCODE_COMPARE_ULE:
+    case OPCODE_COMPARE_UGT:
+    case OPCODE_COMPARE_UGE:
+    case OPCODE_DID_SATURATE:
+    case OPCODE_VECTOR_COMPARE_EQ:
+    case OPCODE_VECTOR_COMPARE_SGT:
+    case OPCODE_VECTOR_COMPARE_SGE:
+    case OPCODE_VECTOR_COMPARE_UGT:
+    case OPCODE_VECTOR_COMPARE_UGE:
+    case OPCODE_ADD:
+    case OPCODE_ADD_CARRY:
+    case OPCODE_VECTOR_ADD:
+    case OPCODE_SUB:
+    case OPCODE_VECTOR_SUB:
+    case OPCODE_MUL:
+    case OPCODE_MUL_HI:  // TODO(benvanik): remove this and add INT128 type.
+    case OPCODE_DIV:
+    case OPCODE_MUL_ADD:
+    case OPCODE_MUL_SUB:
+    case OPCODE_NEG:
+    case OPCODE_ABS:
+    case OPCODE_SQRT:
+    case OPCODE_RSQRT:
+    case OPCODE_RECIP:
+    case OPCODE_POW2:
+    case OPCODE_LOG2:
+    case OPCODE_DOT_PRODUCT_3:
+    case OPCODE_DOT_PRODUCT_4:
+    case OPCODE_AND_NOT:
+    case OPCODE_VECTOR_SHL:
+    case OPCODE_VECTOR_SHR:
+    case OPCODE_VECTOR_SHA:
+    case OPCODE_VECTOR_ROTATE_LEFT:
+    case OPCODE_VECTOR_AVERAGE:
+    case OPCODE_INSERT:
+    case OPCODE_EXTRACT:
+    case OPCODE_SPLAT:
+    case OPCODE_PERMUTE:
+    case OPCODE_SWIZZLE:
+    case OPCODE_PACK:
+    case OPCODE_UNPACK:
+    case OPCODE_ATOMIC_EXCHANGE:
+    case OPCODE_ATOMIC_COMPARE_EXCHANGE:
+    case OPCODE_SET_ROUNDING_MODE:
+    case OPCODE_VECTOR_DENORMFLUSH:  // converts denormals to signed zeros in a vector
+    case OPCODE_TO_SINGLE:
+    case OPCODE_SET_NJM:
+    case OPCODE_DELAY_EXECUTION:  // for db16cyc
+    case OPCODE_RESERVED_LOAD:
+    case OPCODE_RESERVED_STORE:
+    case __OPCODE_MAX_VALUE:
+      break;
   }
 
   if (Is1BitOpcode(def_opcode)) {
@@ -1316,6 +1422,126 @@ bool SimplificationPass::SimplifyBasicArith(hir::Instr* i,
     case OPCODE_SHL: {
       return SimplifySHLArith(i, builder);
     }
+    case OPCODE_COMMENT:
+    case OPCODE_NOP:
+    case OPCODE_SOURCE_OFFSET:
+    case OPCODE_DEBUG_BREAK:
+    case OPCODE_DEBUG_BREAK_TRUE:
+    case OPCODE_TRAP:
+    case OPCODE_TRAP_TRUE:
+    case OPCODE_CALL:
+    case OPCODE_CALL_TRUE:
+    case OPCODE_CALL_INDIRECT:
+    case OPCODE_CALL_INDIRECT_TRUE:
+    case OPCODE_CALL_EXTERN:
+    case OPCODE_RETURN:
+    case OPCODE_RETURN_TRUE:
+    case OPCODE_SET_RETURN_ADDRESS:
+    case OPCODE_BRANCH:
+    case OPCODE_BRANCH_TRUE:
+    case OPCODE_BRANCH_FALSE:
+    case OPCODE_CAST:
+    case OPCODE_CONVERT:
+    case OPCODE_ROUND:
+    case OPCODE_VECTOR_CONVERT_I2F:
+    case OPCODE_VECTOR_CONVERT_F2I:
+    case OPCODE_LOAD_VECTOR_SHL:
+    case OPCODE_LOAD_VECTOR_SHR:
+    case OPCODE_LOAD_CLOCK:
+    case OPCODE_LOAD_LOCAL:
+    case OPCODE_STORE_LOCAL:
+    case OPCODE_LOAD_CONTEXT:
+    case OPCODE_STORE_CONTEXT:
+    case OPCODE_CONTEXT_BARRIER:
+    case OPCODE_LOAD_MMIO:
+    case OPCODE_STORE_MMIO:
+    case OPCODE_LOAD_OFFSET:   // remove: use add instead?
+    case OPCODE_STORE_OFFSET:  // remove: use add instead?
+    case OPCODE_LOAD:
+    case OPCODE_STORE:
+    case OPCODE_LVL:
+    case OPCODE_LVR:
+    case OPCODE_STVL:
+    case OPCODE_STVR:
+    case OPCODE_MEMSET:
+    case OPCODE_CACHE_CONTROL:
+    case OPCODE_MEMORY_BARRIER:
+    case OPCODE_VECTOR_MAX:
+    case OPCODE_VECTOR_MIN:
+    case OPCODE_IS_NAN:  // remove? compare_eq with self instead
+    case OPCODE_COMPARE_EQ:
+    case OPCODE_COMPARE_NE:
+    case OPCODE_COMPARE_SLT:
+    case OPCODE_COMPARE_SLE:
+    case OPCODE_COMPARE_SGT:
+    case OPCODE_COMPARE_SGE:
+    case OPCODE_COMPARE_ULT:
+    case OPCODE_COMPARE_ULE:
+    case OPCODE_COMPARE_UGT:
+    case OPCODE_COMPARE_UGE:
+    case OPCODE_DID_SATURATE:
+    case OPCODE_VECTOR_COMPARE_EQ:
+    case OPCODE_VECTOR_COMPARE_SGT:
+    case OPCODE_VECTOR_COMPARE_SGE:
+    case OPCODE_VECTOR_COMPARE_UGT:
+    case OPCODE_VECTOR_COMPARE_UGE:
+    case OPCODE_ADD_CARRY:
+    case OPCODE_VECTOR_ADD:
+    case OPCODE_VECTOR_SUB:
+    case OPCODE_MUL:
+    case OPCODE_MUL_HI:  // TODO(benvanik): remove this and add INT128 type.
+    case OPCODE_DIV:
+    case OPCODE_MUL_ADD:
+    case OPCODE_MUL_SUB:
+    case OPCODE_NEG:
+    case OPCODE_ABS:
+    case OPCODE_SQRT:
+    case OPCODE_RSQRT:
+    case OPCODE_RECIP:
+    case OPCODE_POW2:
+    case OPCODE_LOG2:
+    case OPCODE_DOT_PRODUCT_3:
+    case OPCODE_DOT_PRODUCT_4:
+    case OPCODE_AND_NOT:
+    case OPCODE_VECTOR_SHL:
+    case OPCODE_VECTOR_SHR:
+    case OPCODE_VECTOR_SHA:
+    case OPCODE_VECTOR_ROTATE_LEFT:
+    case OPCODE_VECTOR_AVERAGE:
+    case OPCODE_INSERT:
+    case OPCODE_EXTRACT:
+    case OPCODE_SPLAT:
+    case OPCODE_PERMUTE:
+    case OPCODE_SWIZZLE:
+    case OPCODE_PACK:
+    case OPCODE_UNPACK:
+    case OPCODE_ATOMIC_EXCHANGE:
+    case OPCODE_ATOMIC_COMPARE_EXCHANGE:
+    case OPCODE_SET_ROUNDING_MODE:
+    case OPCODE_VECTOR_DENORMFLUSH:  // converts denormals to signed zeros in a vector
+    case OPCODE_TO_SINGLE:
+    case OPCODE_SET_NJM:
+    case OPCODE_DELAY_EXECUTION:  // for db16cyc
+    case OPCODE_RESERVED_LOAD:
+    case OPCODE_RESERVED_STORE:
+    case __OPCODE_MAX_VALUE:
+    case OPCODE_ASSIGN:
+    case OPCODE_ZERO_EXTEND:
+    case hir::OPCODE_SIGN_EXTEND:
+    case hir::OPCODE_TRUNCATE:
+    case hir::OPCODE_MAX:
+    case hir::OPCODE_MIN:
+    case hir::OPCODE_SELECT:
+    case hir::OPCODE_AND:
+    case hir::OPCODE_OR:
+    case hir::OPCODE_XOR:
+    case hir::OPCODE_NOT:
+    case hir::OPCODE_SHR:
+    case hir::OPCODE_SHA:
+    case hir::OPCODE_ROTATE_LEFT:
+    case hir::OPCODE_BYTE_SWAP:
+    case hir::OPCODE_CNTLZ:
+      break;
   }
   return false;
 }

@@ -200,11 +200,10 @@ exit_loop:
 }
 bool Instr::IsFake() const {
   Opcode num = opcode->num;
-  switch (num) {
-    case OPCODE_NOP:
-    case OPCODE_COMMENT:
-    case OPCODE_CONTEXT_BARRIER:
-    case OPCODE_SOURCE_OFFSET:
+  if ((num == OPCODE_NOP) ||
+      (num == OPCODE_COMMENT) ||
+      (num == OPCODE_CONTEXT_BARRIER) ||
+      (num == OPCODE_SOURCE_OFFSET))  {
       return true;
   }
   return false;

@@ -14,6 +14,7 @@
 
 #include "xenia/base/assert.h"
 #include "xenia/base/string_util.h"
+#include "xenia/cpu/processor.h"
 
 namespace xe {
 namespace cpu {
@@ -192,7 +193,12 @@ bool PPCContext::CompareRegWithString(const char* name, const char* value,
     assert_always("Unrecognized register name: %s\n", name);
     return false;
   }
-}
+
+
+  }
+
+
+
 
 }  // namespace ppc
 }  // namespace cpu

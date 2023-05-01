@@ -88,6 +88,7 @@ ThreadState::ThreadState(Processor* processor, uint32_t thread_id,
   context_->virtual_membase = memory_->virtual_membase();
   context_->physical_membase = memory_->physical_membase();
   context_->processor = processor_;
+  context_->memory = processor_->memory();
   context_->thread_state = this;
   context_->thread_id = thread_id_;
 

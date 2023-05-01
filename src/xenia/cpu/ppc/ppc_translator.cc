@@ -9,6 +9,8 @@
 
 #include "xenia/cpu/ppc/ppc_translator.h"
 
+#include <cstdio>
+
 #include "xenia/base/assert.h"
 #include "xenia/base/byte_order.h"
 #include "xenia/base/cvar.h"
@@ -138,9 +140,11 @@ void PPCTranslator::DumpHIR(GuestFunction* function, PPCHIRBuilder* builder) {
     }
 
     {
-      wchar_t tmpbuf[64];
-      _snwprintf(tmpbuf, 64, L"%X", function->address());
-      folder_path.append(&tmpbuf[0]);
+      //wchar_t tmpbuf[64];
+      //_snwprintf(tmpbuf, 64, L"%X", function->address());
+      std::wstring address = fmt::format(L"{:X}", function->address());
+      //folder_path.append(&tmpbuf[0]);
+      folder_path.append(address);
     }
 
     FILE* f = fopen(folder_path.generic_u8string().c_str(), "w");

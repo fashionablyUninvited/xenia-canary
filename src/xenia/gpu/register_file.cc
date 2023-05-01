@@ -10,6 +10,7 @@
 #include "xenia/gpu/register_file.h"
 #include <array>
 #include <cstring>
+#include <climits>
 
 #include "xenia/base/math.h"
 

@@ -29,6 +29,8 @@ const char* GetOpcodeName(Opcode num) {
     return name;
 #include "xenia/cpu/hir/opcodes.inl"
 #undef DEFINE_OPCODE
+    case __OPCODE_MAX_VALUE:
+      break;
   }
   return "invalid opcode";
 }

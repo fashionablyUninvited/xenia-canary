@@ -1111,11 +1111,12 @@ void XexModule::Precompile() {
                                 high_code);
   final_image_sha_.finalize(image_sha_bytes_);
 
-  char fmtbuf[16];
+  //char fmtbuf[16];
 
   for (unsigned i = 0; i < 16; ++i) {
-    sprintf_s(fmtbuf, "%X", image_sha_bytes_[i]);
-    image_sha_str_ += &fmtbuf[0];
+    //sprintf_s(fmtbuf, "%X", image_sha_bytes_[i]);
+    //image_sha_str_ += &fmtbuf[0];
+    image_sha_str_ += fmt::format("{:X}", image_sha_bytes_[i]);
   }
 
   // Find __savegprlr_* and __restgprlr_* and the others.

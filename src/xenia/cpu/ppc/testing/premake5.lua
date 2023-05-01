@@ -7,6 +7,7 @@ project("xenia-cpu-ppc-tests")
   kind("ConsoleApp")
   language("C++")
   links({
+    "aes_128",
     "capstone", -- cpu-backend-x64
     "fmt",
     "mspack",
@@ -14,8 +15,11 @@ project("xenia-cpu-ppc-tests")
     "xenia-core",
     "xenia-cpu",
     "xenia-base",
+    "xenia-hid",
     "xenia-kernel",
     "xenia-patcher",
+    "xenia-ui",
+    "xenia-vfs",
   })
   files({
     "ppc_testing_main.cc",

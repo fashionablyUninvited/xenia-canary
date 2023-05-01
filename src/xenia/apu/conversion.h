@@ -11,6 +11,7 @@
 #define XENIA_APU_CONVERSION_H_
 
 #include <cstdint>
+#include <immintrin.h>
 
 #include "xenia/base/byte_order.h"
 #include "xenia/base/platform.h"
@@ -19,7 +20,24 @@ namespace xe {
 namespace apu {
 namespace conversion {
 
+
+/* The structs used below are to force the load/store to be unaligned. This
+ * is accomplished with the __packed__ attribute. The __may_alias__ prevents
+ * tbaa metadata from being generated based on the struct and the type of the
+ * field inside of it.
+ */
+static __inline__ uint32_t __attribute__((__always_inline__, __nodebug__, __target__("movbe")))
+_load_be_u32(void const * __P) {
+  struct __loadu_u32 {
+    uint32_t __v;
+  } __attribute__((__packed__, __may_alias__));
+  return __builtin_bswap32(((const struct __loadu_u32*)__P)->__v);
+}
+
 #if XE_ARCH_AMD64
+
+
+
 
 
 XE_NOINLINE

@@ -21,8 +21,7 @@ project("xenia-cpu")
   local_platform_files("hir")
   local_platform_files("ppc")
 
-include("testing")
-include("ppc/testing")
+
 filter({"configurations:Release", "platforms:Windows"})
 buildoptions({
   "/Os",

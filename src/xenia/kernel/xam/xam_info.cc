@@ -251,6 +251,23 @@ dword_result_t XGetLanguage_entry() {
 }
 DECLARE_XAM_EXPORT1(XGetLanguage, kNone, kImplemented);
 
+typedef uint8_t BYTE;
+typedef uint32_t DWORD;
+typedef int32_t LONG;
+typedef int64_t LONGLONG;
+
+typedef union _LARGE_INTEGER {
+  struct {
+    DWORD LowPart;
+    LONG  HighPart;
+  };
+  struct {
+    DWORD LowPart;
+    LONG  HighPart;
+  } u;
+  LONGLONG QuadPart;
+} LARGE_INTEGER, *PLARGE_INTEGER;
+
 // http://www.noxa.org/blog/2011/02/28/building-an-xbox-360-emulator-part-3-feasibilityos/
 // http://www.noxa.org/blog/2011/08/13/building-an-xbox-360-emulator-part-5-xex-files/
 dword_result_t RtlSleep_entry(dword_t dwMilliseconds, dword_t bAlertable) {
@@ -283,7 +300,7 @@ DECLARE_XAM_EXPORT1(SleepEx, kNone, kImplemented);
 
 // https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
 void Sleep_entry(dword_t dwMilliseconds) {
-  RtlSleep_entry(dwMilliseconds, FALSE);
+  RtlSleep_entry(dwMilliseconds, 0);
 }
 DECLARE_XAM_EXPORT1(Sleep, kNone, kImplemented);
 
@@ -293,7 +310,7 @@ DECLARE_XAM_EXPORT1(GetTickCount, kNone, kImplemented);
 
 dword_result_t GetModuleHandleA_entry(lpstring_t moduleName) {
   auto module = kernel_state()->GetModule(moduleName.value(), false);
-  return module ? module->hmodule_ptr() : NULL;
+  return module ? module->hmodule_ptr() : 0;
 }
 DECLARE_XAM_EXPORT1(GetModuleHandleA, kNone, kImplemented);
 

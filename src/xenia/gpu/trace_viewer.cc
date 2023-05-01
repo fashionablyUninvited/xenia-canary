@@ -369,6 +369,32 @@ void TraceViewer::DrawPacketDisassemblerUI() {
                   ImGui::Text("%.16" PRIX64, action.set_bin_select.value);
                   break;
                 }
+                case PacketAction::Type::kSetBinMaskLo:
+                case PacketAction::Type::kSetBinMaskHi:
+                case PacketAction::Type::kSetBinSelectLo:
+                case PacketAction::Type::kSetBinSelectHi:
+                case PacketAction::Type::kMeInit:
+                case PacketAction::Type::kGenInterrupt:
+                case PacketAction::Type::kWaitRegMem:
+                case PacketAction::Type::kRegRmw:
+                case PacketAction::Type::kCondWrite:
+                case PacketAction::Type::kEventWrite:
+                case PacketAction::Type::kEventWriteSHD:
+                case PacketAction::Type::kEventWriteExt:
+                case PacketAction::Type::kDrawIndx:
+                case PacketAction::Type::kDrawIndx2:
+                case PacketAction::Type::kInvalidateState:
+                case PacketAction::Type::kImLoad:
+                case PacketAction::Type::kImLoadImmediate:
+                case PacketAction::Type::kContextUpdate:
+                case PacketAction::Type::kWaitForIdle:
+                case PacketAction::Type::kVizQuery:
+                case PacketAction::Type::kEventWriteZPD:
+                case PacketAction::Type::kMemWrite:
+                case PacketAction::Type::kRegToMem:
+                case PacketAction::Type::kIndirBuffer:
+                case PacketAction::Type::kXeSwap:
+                  break;
               }
             }
             ImGui::TreePop();
